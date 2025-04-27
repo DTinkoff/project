@@ -1,157 +1,264 @@
-:root {
-    --current-color: rgb(255, 102, 46);
-    --default-color: rgb(62, 62, 62);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    background-color: black;
 }
 
-#main-page {
-    position: absolute; /* Главная страница поверх всего */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    width: 100vw;
+    height: 100vh;
+    cursor: url('music-note.png'), auto;
+}
+
+/* === Анимации === */
+.card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 20px rgba(255, 165, 0, 0.2);
+    transform: scale(1.05);
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000000; /* Фоновый цвет */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10; /* Убедитесь, что главная страница выше редактора */
-}
-
-/* Кнопка на главной странице */
-.button {
-    border-radius: 7px;
-    padding: 1em;
-    background: tomato;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.button:hover {
-    transform: scale(1.05);
-    box-shadow: 2px 2px 5px 2px #b6b6b6;
-}
-
-.button:active {
-    transform: scale(1);
-    box-shadow: none;
-}
-
-/* Изображение на главной странице */
-.photo {
     width: 100%;
-    height: auto;
-    margin-top: 20px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
-
-
-
-#editor {
-    opacity: 0; /* Редактор изначально невидим */
-    transition: opacity 0.5s ease; /* Плавный переход при появлении */
+.modal-content {
+    background: #1a1a1a;
+    padding: 20px;
+    border: 1px solid #763A0B;
+    border-radius: 10px;
+    max-width: 500px;
+    text-align: center;
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    z-index: 5; /* Редактор ниже главной страницы */
 }
 
-.field-container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
+
+.modal-close {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: #333;
+    color: #763A0B;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
 }
 
-.field {
-    width: 60vw;
-    height: 60vw;
-    display: grid;
-    grid-template-columns: repeat(15, 1fr);
-    grid-template-rows: repeat(15, 1fr);
-    gap: 1px;
-}
-
-.cell {
-    background: var(--default-color);
-}
-
-.cell:hover {
-    background: var(--current-color);
-    opacity: .5;
-}
-
-.color-palette {
-    min-height: 30vw;
-    width: 4vw;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.color-cell,
-.tool-cell {
-    background: var(--default-color);
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    transition: all .2s linear;
+/* Курсор для кнопок */
+.btn-learnmore {
     cursor: pointer;
 }
 
-.color-cell:hover {
+.modal-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.modal-link {
+    color: #763A0B;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* === Соцсети === */
+.nav-item img {
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover img {
     transform: scale(1.1);
-    transition: all .2s linear;
 }
 
-.color-cell.red {
-    background: rgb(255, 102, 46);
+.nav-item a {
+    background: transparent !important;
 }
 
-.color-cell.green {
-    background: rgb(26, 218, 84);
+/* Разделяющий заголовок */
+.section-heading {
+    font-size: 1.5em;
+    font-weight: 500;
+    width: 100vw;
+    padding: 1em 64px;
+    margin-top: 3em;
+    margin-bottom: 2em;
+    background-color: #2f1f07;
 }
 
-.color-cell.blue {
-    background: rgb(83, 15, 255);
-}
 
-.color-cell.yellow {
-    background: rgb(255, 236, 26);
-}
-
-.color-cell.skyblue {
-    background: rgb(142, 229, 255);
-}
-
-.tool-cell {
-    background: transparent;
-    border: 1px solid white;
-    box-sizing: border-box;
+/* Шапка */
+header {
+    width: 100%;
+    height: 6em;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 64px;
 }
 
-.tool-cell img {
-    width:100%;
+.logo-group {
+    
+    display: flex;
+    width: fit-content;
+    height: 100%;
+    align-items: center;
+    gap: 16px;
 }
 
-.fill-tool {
-    background: transparent;
+.logo-group img {
+    height: 4em;
+}
+
+
+/* Технологии - technologies */
+.technologies {
+    width: calc(100vw - 128px);
+    margin-left: 64px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+}
+
+.technologies .card {
+    border: 1px solid #763A0B;
+    padding: 1.5em;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.technologies .card .content img {
+    width: 100%;
+    border-radius: 1em;
+}
+
+.technologies .card .content h2 {
+    font-weight: 600;
+    margin: .5em 0;
+}
+
+.technologies .card .content p {
+    margin: 1em 0;
+}
+
+.btn-learnmore {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    color: #763A0B;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
 }
 
-.selected {
-    outline: 2px solid white;
-    border: 2px solid black;
-    box-sizing: border-box;
+.btn-learnmore img {
+    width: 1.2em;
+    height: 1em;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
-.selected:hover {
-    transform: scale(1);
+.btn-learnmore:hover {
+    text-decoration: none;
+}
+
+
+.advantages {
+    width: calc(100vw - 128px);
+    margin-left: 64px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+}
+
+.advantages .card {
+    border: 1px solid #763A0B;
+    padding: 1.5em;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.advantages .card .content img {
+    width: 100%;
+    border-radius: 1em;
+}
+
+.advantages .card .content h2 {
+    font-weight: 600;
+    margin: .5em 0;
+}
+
+
+
+
+
+
+/* Подвал - footer */
+footer {
+    color: white;
+    width: 100%;
+    background-color: #2f1f07;
+    padding: 64px;
+    margin-top: 6em;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 16px 0;
+    background-color: #2f1f07;
+    border-radius: 8px;
+    
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent !important;
+}
+
+.nav-item.btn {
+    margin-right: auto;
+    color: white;
+}
+
+.nav-item img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.nav-item img:hover {
+    transform: scale(1.1); 
+    opacity: 0.9;
 }
